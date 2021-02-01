@@ -1,0 +1,51 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" *ngFor="let colkeys of columns$ | async" (click)="onSort(colkeys[0])">{{colkeys[1]}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of users$ | async">
+        <tr (click)="onSelectUser(user.user_name)">
+          <td *ngFor="let col of columns$ | async">
+            {{user[col[0]]}}
+          </td>
+        </tr>
+        <tr 
+          *ngIf="selectedUser == user.user_name">
+          <td colspan="15">
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col" *ngFor="let detailCol of detailColumns$ | async">{{detailCol[1]}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let userD of userDetail$ | async">
+                    <td *ngFor="let col of detailColumns$ | async">
+                      {{userD[col[0]]}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    [collectionSize]="(total$ | async)!" [(page)]="summaryService.page" [pageSize]="summaryService.limit">
+  </ngb-pagination>
+
+  <select class="custom-select" style="width: auto" name="limit" [(ngModel)]="summaryService.limit">
+    <option value="10">10 items per page</option>
+    <option value="25">25 items per page</option>
+    <option value="100">100 items per page</option>
+  </select>
+</div>

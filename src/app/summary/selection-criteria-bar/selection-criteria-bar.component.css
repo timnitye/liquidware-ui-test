@@ -1,0 +1,12 @@
+form {
+    margin: 1rem 3rem;
+    border: 1px solid #efefef;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+form > div {
+    margin-top: 0;
+}
+form label {
+    vertical-align: -webkit-baseline-middle;
+}
